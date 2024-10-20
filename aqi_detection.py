@@ -3,6 +3,7 @@ import requests
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Wedge, Rectangle
+import os #imoprting for image
 
 
 #st.set_page_config(layout="wide")
@@ -22,21 +23,21 @@ def fetch_aqi(city, state, country, api_key):
 # Function to determine AQI category
 def get_aqi_category(aqi):
     if aqi is None:
-        return 0
-    if aqi <= 50:
-        return 1
-    elif aqi <= 100:
-        return 2
-    elif aqi <= 150:
-        return 3
-    elif aqi <= 200:
-        return 4
-    elif aqi <= 300:
-        return 5
-    elif aqi <= 400:
-        return 7
-    else:
-        return 7
+        return 0, "Good", "The air in your area is fresh and free from toxins. There are health risks."
+    elif aqi >= 0 and aqi <= 50:
+        return 1, "Moderate", "The air quality in your country is acceptable for healthy adults, but may pose a mild threat to sensitive individuals"
+    elif aqi > 50 and aqi <= 100:
+        return 2, "Unhealthy for Sensitive Groups", "Breathing the air in your are can cause slight discomfort and difficulty in breathing"
+    elif aqi > 100 and aqi <= 150:
+        return 3, "Unhealthy", "The air quality in your country can be particularly problematic for children, pregnant women and the elderly."
+    elif aqi > 150 and aqi <= 200:
+        return 4, "Very Unhealthy", "Exposure to the air in your country can lead to chronic illnesses or even organ damage"
+    elif aqi > 200 and aqi <= 300:
+        return 5, "Hazardous", 
+    elif aqi > 300 and aqi <= 400:
+        return 6, "Hazardous", "Warning! The air quality in your country is life-threatening. Prolonged exposure can result in premature death"
+    #else:
+    #    return 6
 
 #Adding Guage chart funtions and variables 
 # Gauge chart colors and values
@@ -105,10 +106,33 @@ api_key = "25b292e2-5c8f-48c5-9712-d768fa61ae0a"
 locations = {
     "": ["", ""],
     "Mumbai": ["Maharashtra", "India"],
+    "Bengaluru": ["Karnataka", "India"],
     "Delhi": ["Delhi", "India"],
     "New York": ["New York", "USA"],
     "Los Angeles": ["California", "USA"],
-    "Los Angeles": ["California", "USA"],
+    "London": ["England", "UK"],
+    "Paris": ["Île-de-France", "France"],
+    "Tokyo": ["Tokyo", "Japan"],
+    "Sydney": ["New South Wales", "Australia"],
+    "Toronto": ["Ontario", "Canada"],
+    "Berlin": ["Berlin", "Germany"],
+    "Beijing": ["Beijing", "China"],
+    "Moscow": ["Moscow", "Russia"],
+    "São Paulo": ["São Paulo", "Brazil"],
+    "Cape Town": ["Western Cape", "South Africa"],
+    "Dubai": ["Dubai", "UAE"],
+    "Mexico City": ["Mexico City", "Mexico"],
+    "Seoul": ["Seoul", "South Korea"],
+    "Singapore": ["Singapore", "Singapore"],
+    "Hong Kong": ["Hong Kong", "China"],
+    "Kolkata": ["West Bengal", "India"],
+    "Bangkok": ["Bangkok", "Thailand"],
+    "Buenos Aires": ["Buenos Aires", "Argentina"],
+    "Cairo": ["Cairo", "Egypt"],
+    "Jakarta": ["Jakarta", "Indonesia"],
+    "Nairobi": ["Nairobi County", "Kenya"],
+    "Istanbul": ["Istanbul", "Turkey"],
+    "Lagos": ["Lagos", "Nigeria"]
 }
 
 # Use a markdown to create a centered div for the form
@@ -138,7 +162,7 @@ if submit_button:
         # Fetch AQI data
         aqi_value = fetch_aqi(selected_city, state, country, api_key)
         # Get AQI category and color
-        aqi_category = get_aqi_category(aqi_value)
+        aqi_index, aqi_category, aqi_description = get_aqi_category(aqi_value)
 
         #plotting graph
         with col2:
@@ -147,9 +171,9 @@ if submit_button:
             map_plot(ax)  # Pass the ax here
             ax.set_facecolor('none') 
             #map_plot(ax)
-            angle, radius = gauge(arrow=aqi_category)
+            angle, radius = gauge(arrow=aqi_index)
             colors_ind2 = colors_ind[::-1]
-            indication = colors_ind2[(aqi_category-1)]
+            indication = colors_ind2[(aqi_index-1)]
             # Add the arrow annotation in polar coordinates
             ax.annotate(aqi_value, xy=(angle, radius), xytext=(0, 0),
                         arrowprops=dict(arrowstyle="wedge, tail_width=0.5", color="black", shrinkA=0),
@@ -162,6 +186,11 @@ if submit_button:
             st.pyplot(fig, clear_figure="True")
         # Display a message about air quality
         with col3:
-            st.write(f"**Air Quality Status:** {aqi_value} indicating {aqi_category}")
+            st.write(f"**Air Quality Status:** {aqi_value} indicating {aqi_value}, {aqi_category}, {aqi_description}")
+            col4, col5, col6 = st.columns(3)
+            with col5: #to make it in the center 
+                st.image("Images/aqi.png", caption=None, width=200, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+            st.write(aqi_description)
+
     else:
         st.error("Please select a city.")
