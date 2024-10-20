@@ -1,13 +1,17 @@
 [[pages]]
 path = "aqi_detection.py"
-name = "Air Quality"
-icon = "📄"
+name = "Air Quality Index"
+icon = ":four_leaf_clover:"
 
+[[pages]]
+path = "weatherforecast.py"
+name = "Daily Weather"
+icon = ":mostly_sunny:"
 
 [[pages]]
 path = "about.py"
-name = "Daily Weather"
-icon = "📖"
+name = "About"
+icon = ":star:"
 
 [[pages]]
 path = "me.py"

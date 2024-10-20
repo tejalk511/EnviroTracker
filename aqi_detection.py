@@ -23,19 +23,19 @@ def fetch_aqi(city, state, country, api_key):
 # Function to determine AQI category
 def get_aqi_category(aqi):
     if aqi is None:
-        return 0, "Good", "The air in your area is fresh and free from toxins. There are health risks."
+        return [-1, "Unable to fetch API","Try again" ]
     elif aqi >= 0 and aqi <= 50:
-        return 1, "Moderate", "The air quality in your country is acceptable for healthy adults, but may pose a mild threat to sensitive individuals"
+        return [1, "Good", "The air in your area is fresh and free from toxins. There are no health risks.", "Images/Good.png"]
     elif aqi > 50 and aqi <= 100:
-        return 2, "Unhealthy for Sensitive Groups", "Breathing the air in your are can cause slight discomfort and difficulty in breathing"
+        return [2, "Moderate", "The air quality in your country is acceptable for healthy adults, but may pose a mild threat to sensitive individuals", "Images/Moderate.png"]
     elif aqi > 100 and aqi <= 150:
-        return 3, "Unhealthy", "The air quality in your country can be particularly problematic for children, pregnant women and the elderly."
+        return [3, "Unhealthy for Sensitive Groups", "Breathing the air in your are can cause slight discomfort and difficulty in breathing", "Images/Unhealthy for Sensitive Groups.png" ]
     elif aqi > 150 and aqi <= 200:
-        return 4, "Very Unhealthy", "Exposure to the air in your country can lead to chronic illnesses or even organ damage"
+        return [4, "Unhealthy", "The air quality in your country can be particularly problematic for children, pregnant women and the elderly.", "Images/Unhealthy.png"]
     elif aqi > 200 and aqi <= 300:
-        return 5, "Hazardous", 
-    elif aqi > 300 and aqi <= 400:
-        return 6, "Hazardous", "Warning! The air quality in your country is life-threatening. Prolonged exposure can result in premature death"
+        return [5, "Very Unhealthy", "Exposure to the air in your country can lead to chronic illnesses or even organ damage", "Images/Very Unhealthy.png"]
+    elif aqi > 300 and aqi <= 500:
+        return [6, "Hazardous", "Warning! The air quality in your country is life-threatening. Prolonged exposure can result in premature death", "Images/Hazardous.png"]
     #else:
     #    return 6
 
@@ -162,10 +162,23 @@ if submit_button:
         # Fetch AQI data
         aqi_value = fetch_aqi(selected_city, state, country, api_key)
         # Get AQI category and color
-        aqi_index, aqi_category, aqi_description = get_aqi_category(aqi_value)
+        aqi_quality = get_aqi_category(aqi_value)
+        aqi_index = aqi_quality[0]
+        aqi_category = aqi_quality[1]
+        aqi_description = aqi_quality[2]
+        path = aqi_quality[3]
+        #print("aqi-categ = ", )
+        #print("aqi_description = ", )
 
-        #plotting graph
+        # Display a message about air quality
         with col2:
+            st.write(f"**Air Quality Status:** {aqi_value} indicating {aqi_category}")
+            col4, col5, col6 = st.columns(3)
+            with col5: #to make it in the center 
+                st.image(path, caption=None, width=200, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
+            st.write(aqi_description)
+        #plotting graph
+        with col3:
             #fig = plt.figure(figsize=(10, 10), facecolor='none')  # Set figure background to transparent
             #ax = fig.add_subplot(projection="polar")
             map_plot(ax)  # Pass the ax here
@@ -184,13 +197,6 @@ if submit_button:
             plt.tight_layout()
             ax.set_axis_off()  #to remove plotting
             st.pyplot(fig, clear_figure="True")
-        # Display a message about air quality
-        with col3:
-            st.write(f"**Air Quality Status:** {aqi_value} indicating {aqi_value}, {aqi_category}, {aqi_description}")
-            col4, col5, col6 = st.columns(3)
-            with col5: #to make it in the center 
-                st.image("Images/aqi.png", caption=None, width=200, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
-            st.write(aqi_description)
 
     else:
         st.error("Please select a city.")
