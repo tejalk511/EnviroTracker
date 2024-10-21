@@ -194,9 +194,12 @@ if submit_button:
                         fontsize=30, color="black", ha="center"
                     )
             #plt.title("Performance Gauge Chart", loc="center", pad=20, fontsize=35, fontweight="bold")
+            ax.set_axis_off()
+
+            # Save the figure with a transparent background
             plt.tight_layout()
-            ax.set_axis_off()  #to remove plotting
-            st.pyplot(fig, clear_figure="True")
+            plt.savefig('Images/gauge_meter.png', transparent=True)
+            st.image('Images/gauge_meter.png', caption=None, width=500, use_column_width=None, clamp=False, channels="RGB", output_format="auto")
 
     else:
         st.error("Please select a city.")
