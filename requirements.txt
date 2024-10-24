@@ -1,1 +1,10 @@
-streamlit
+matplotlib==3.7.2
+pandas==2.2.3
+numpy==2.1.2
+plotly==5.16.0
+requests==2.32.3
+pytz==2024.2
+pyowm==3.4.0
+geopy==2.4.0
+folium==0.14.0
+streamlit_folium==0.12.0
