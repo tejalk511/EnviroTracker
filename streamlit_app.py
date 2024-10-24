@@ -22,6 +22,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, Wedge, Rectangle
 import os #imoprting for image
+
+st.set_page_config(layout="wide")
+
 # Print installed packages
 st.write("Installed packages:")
 os.system('pip freeze > installed_packages.txt')
@@ -31,7 +34,7 @@ with open('installed_packages.txt', 'r') as f:
     installed_packages = f.read()
 st.code(installed_packages)
 
-st.set_page_config(layout="wide")
+
 
 #for top white space removal 
 #end top white space removal
