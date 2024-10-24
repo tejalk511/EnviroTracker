@@ -25,21 +25,6 @@ import os #imoprting for image
 
 st.set_page_config(layout="wide")
 
-# Print installed packages
-st.write("Installed packages:")
-os.system('pip freeze > installed_packages.txt')
-
-# Read and display the installed packages
-with open('installed_packages.txt', 'r') as f:
-    installed_packages = f.read()
-st.code(installed_packages)
-
-
-
-#for top white space removal 
-#end top white space removal
-
-
 #sections = st.sidebar.toggle("Sections", value=True, key="use_sections")
 
 nav = get_nav_from_toml("pages_sections.toml")
