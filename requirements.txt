@@ -9,3 +9,4 @@ pyowm
 geopy
 folium
 streamlit_folium
+st_pages
