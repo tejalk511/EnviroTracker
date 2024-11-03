@@ -1,19 +1,39 @@
-# 🎈 Blank app template
+EnviroTrack 🌍
+EnviroTrack is a user-friendly web application providing real-time temperature and Air Quality Index (AQI) insights for locations worldwide. With an intuitive interface, EnviroTrack allows users to monitor essential environmental data, helping them make informed decisions about their outdoor activities and overall well-being.
 
-A simple Streamlit app template for you to modify!
+Features
+Real-Time AQI Monitoring: Displays air quality indicators with categories from "Good" to "Hazardous."
+Temperature Data: Shows current temperature readings for selected locations.
+User-Friendly Interface: Simplified design with an easy-to-navigate layout.
+Visual Indicators: Color-coded AQI categories and weather icons for quick visual insights.
+Demo
+Screenshot or GIF of the main interface.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+Tech Stack
+Frontend: Streamlit (for UI and layout management)
+Backend: Python (data handling and API integration)
+APIs Used: OpenWeatherMap for AQI and temperature data
+Installation
+To set up and run the project locally:
 
-### How to run it on your own machine
+Clone the Repository:
 
-1. Install the requirements
+bash
+Copy code
+git clone https://github.com/yourusername/EnviroTrack.git
+cd EnviroTrack
+Install Dependencies:
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+bash
+Copy code
+pip install -r requirements.txt
+Run the Application:
 
-2. Run the app
+bash
+Copy code
+streamlit run app.py
+Usage
+Upon launching, use the sidebar to select or enter a location. The app will display current AQI, temperature, and associated guidance.
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+Acknowledgments
+OpenWeatherMap API for real-time AQI and temperature data.
